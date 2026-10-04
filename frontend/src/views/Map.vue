@@ -25,10 +25,16 @@ const cells = computed(() => {
   if (!data.value) return []
   const map = new Map<string, any>()
   for (const a of data.value.assignments || []) map.set(a.row + ',' + a.col, a)
+  const deskSet = new Set<string>(
+    ((data.value.desk && data.value.desk.cells) || []).map((p: number[]) => p[0] + ',' + p[1])
+  )
   const out: any[] = []
   for (let r = 0; r < data.value.rows; r++) {
     for (let c = 0; c < data.value.cols; c++) {
-      out.push(map.get(r + ',' + c) || { empty: true, row: r, col: c })
+      const key = r + ',' + c
+      if (map.has(key)) out.push(map.get(key))
+      else if (deskSet.has(key)) out.push({ desk: true, row: r, col: c })
+      else out.push({ empty: true, row: r, col: c })
     }
   }
   return out
@@ -46,6 +52,10 @@ function paperClass(pid: number) {
   <h1>考场课桌网格</h1>
   <p class="sub">课桌网格为主视图 · 左侧考生名册夹板 · 违规课桌高亮</p>
   <button class="btn" @click="run">重新排座</button>
+  <span v-if="data && data.desk && data.desk.configured" class="hs-legend">
+    <span class="hs-legend-swatch hs-invigilator"></span>监考桌贴后墙占 {{ data.stats.desk_blocked }} 格（不坐人）
+    · 可坐容量 {{ data.stats.capacity }} / 网格 {{ data.stats.grid_capacity }}
+  </span>
   <div class="hs-classroom" style="margin-top:0.85rem">
     <aside class="hs-clipboard">
       <h2>考生名册</h2>
@@ -62,9 +72,12 @@ function paperClass(pid: number) {
         <div
           v-for="(cell,i) in cells" :key="i"
           class="hs-desk"
-          :class="{ empty: cell.empty, 'hs-viol': isViol(cell) }"
+          :class="{ empty: cell.empty, 'hs-viol': isViol(cell), 'hs-invigilator': cell.desk }"
         >
-          <template v-if="!cell.empty">
+          <template v-if="cell.desk">
+            <span class="hs-desk-label">监考桌</span>
+          </template>
+          <template v-else-if="!cell.empty">
             <span class="hs-paper-tag" :class="paperClass(cell.paper_id)">卷{{ cell.paper_id }}</span>
             <div>{{ cell.name }}</div>
           </template>

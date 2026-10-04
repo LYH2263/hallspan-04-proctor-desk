@@ -24,6 +24,9 @@ onMounted(async () => {
   </div>
   <div class="card" v-if="unplaced.length">
     <h3>未排上</h3>
-    <div v-for="u in unplaced" :key="u.id">{{ u.name }}（{{ u.ticket_no }}）</div>
+    <div v-for="u in unplaced" :key="u.id">
+      {{ u.name }}（{{ u.ticket_no }}）
+      <span class="muted">— {{ u.reason || '不满足最小间距或同卷相邻约束' }}</span>
+    </div>
   </div>
 </template>

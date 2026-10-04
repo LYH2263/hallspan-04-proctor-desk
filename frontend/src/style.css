@@ -133,6 +133,28 @@ h1 {
   background: #fde8e6;
   box-shadow: 0 0 0 2px rgba(192,57,43,0.35);
 }
+/* 监考桌：整块矩形贴后墙，占格不坐人——区别于考生课桌与空区 */
+.hs-desk.hs-invigilator {
+  background: repeating-linear-gradient(45deg, #6b5a3e, #6b5a3e 6px, #57472f 6px, #57472f 12px);
+  border: 2px solid #3d3120;
+  color: #f5eeda;
+  box-shadow: inset 0 0 0 2px rgba(245,238,218,0.25), 1px 2px 0 rgba(30,42,54,0.2);
+}
+.hs-desk .hs-desk-label {
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.05em;
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+}
+.hs-legend {
+  margin-left: 0.75rem; font-size: 0.78rem; color: var(--hs-muted);
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+}
+.hs-legend-swatch {
+  display: inline-block; width: 12px; height: 12px; border-radius: 2px;
+  vertical-align: -1px; margin-right: 4px; border: 1px solid #3d3120;
+}
+.hs-legend-swatch.hs-invigilator {
+  background: repeating-linear-gradient(45deg, #6b5a3e, #6b5a3e 4px, #57472f 4px, #57472f 8px);
+}
 .hs-desk .hs-paper-tag {
   position: absolute; top: 2px; right: 3px;
   font-size: 0.58rem; font-weight: 800;
