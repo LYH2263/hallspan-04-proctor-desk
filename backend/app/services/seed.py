@@ -5,7 +5,9 @@ from app.models.models import Candidate, Hall, PaperSet
 def seed_if_empty(db: Session) -> None:
     if (db.scalar(select(func.count()).select_from(Hall)) or 0) > 0:
         return
-    hall = Hall(code="H101", name="一号考室", rows=5, cols=6, min_manhattan=2)
+    # 监考桌贴后墙：占最后一行（第 rows-1 行）第 0–1 列；无前排区
+    hall = Hall(code="H101", name="一号考室", rows=5, cols=6, min_manhattan=2,
+                front_rows=0, desk_rows=1, desk_cols=2, desk_col=0)
     db.add(hall); db.flush()
     papers = [("P-A", "语文 A 卷"), ("P-B", "语文 B 卷"), ("P-C", "语文 C 卷")]
     paper_ids = []

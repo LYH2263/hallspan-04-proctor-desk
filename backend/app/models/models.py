@@ -11,6 +11,12 @@ class Hall(Base):
     rows: Mapped[int] = mapped_column(Integer)
     cols: Mapped[int] = mapped_column(Integer)
     min_manhattan: Mapped[int] = mapped_column(Integer, default=2)
+    # 前排行数区间：第 0 .. front_rows-1 行为前排区（0 表示无前排）
+    front_rows: Mapped[int] = mapped_column(Integer, default=0)
+    # 监考桌矩形（贴后墙，即覆盖最大行号那几行）。desk_rows/desk_cols 为 0 表示未配桌（与现网一致）
+    desk_rows: Mapped[int] = mapped_column(Integer, default=0)
+    desk_cols: Mapped[int] = mapped_column(Integer, default=0)
+    desk_col: Mapped[int] = mapped_column(Integer, default=0)
 
 class PaperSet(Base):
     __tablename__ = "paper_sets"

@@ -11,6 +11,10 @@ onMounted(async () => { s.value = await api('/seating/stats?hall_id=1') })
     <div><div class="muted">已排座</div><div class="stat">{{ s.seated }}</div></div>
     <div><div class="muted">未排上</div><div class="stat">{{ s.unplaced }}</div></div>
     <div><div class="muted">违规数</div><div class="stat">{{ s.violations }}</div></div>
-    <div><div class="muted">座位容量</div><div class="stat">{{ s.capacity }}</div></div>
+    <div><div class="muted">监考桌占格</div><div class="stat">{{ s.blocked ?? 0 }}</div></div>
+    <div><div class="muted">可坐容量</div><div class="stat">{{ s.capacity }}</div></div>
   </div>
+  <p class="muted" style="font-size:.78rem">
+    可坐容量已按去掉整块监考桌矩形对齐；图上空区与未排人数同口径。
+  </p>
 </template>

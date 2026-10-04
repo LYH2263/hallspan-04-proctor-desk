@@ -24,6 +24,19 @@ onMounted(async () => {
   </div>
   <div class="card" v-if="unplaced.length">
     <h3>未排上</h3>
-    <div v-for="u in unplaced" :key="u.id">{{ u.name }}（{{ u.ticket_no }}）</div>
+    <div v-for="u in unplaced" :key="u.id">
+      {{ u.name }}（{{ u.ticket_no }}）
+      <span :class="u.reason && u.reason.includes('监考桌') ? 'reason-desk' : 'reason-spacing'">
+        · 原因：{{ u.reason || '间距不足' }}
+      </span>
+    </div>
+    <p class="muted" style="font-size:.75rem;margin:.5rem 0 0">
+      因监考桌整块占格放不下的考生标注「监考桌占格」，而非单点损坏禁坐或间距不足。
+    </p>
   </div>
 </template>
+
+<style scoped>
+.reason-desk { color: var(--hs-wood); font-weight: 700; }
+.reason-spacing { color: var(--hs-paper-b); }
+</style>
